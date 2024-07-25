@@ -1,11 +1,19 @@
-# from django.urls import path, re_path
-# from apps.property.views import
-#
-# urlpatterns = [
-#     path('create/', create_property, name='create_property'),
-#     path('<int:pk>/edit/', edit_property, name='edit_property'),
-#     path('<int:pk>/delete/', delete_property, name='delete_property'),
-#     path('<int:pk>/', property_detail, name='property_detail'),
-#
-#     re_path('filter/', get_property, name='property_by_filter'),
-# ]
+from django.urls import path, re_path
+from apps.property.views import (
+    CreatePropertyAPIView,
+    UpdatePropertyAPIView,
+    DeletePropertyAPIView,
+    PropertyFilterAPIView,
+    GetAllPropertyAPIView,
+    GetPropertyDetailAPIView
+)
+
+
+urlpatterns = [
+    path('create/', CreatePropertyAPIView.as_view()),
+    path('<int:pk>/edit/', UpdatePropertyAPIView.as_view()),
+    path('<int:pk>/delete/', DeletePropertyAPIView.as_view()),
+    path('<int:pk>/', GetPropertyDetailAPIView.as_view()),
+    path('', GetAllPropertyAPIView.as_view()),
+    re_path('filter/', PropertyFilterAPIView.as_view()),
+]
