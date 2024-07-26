@@ -1,4 +1,5 @@
 from django.urls import path, re_path
+
 from apps.property.views import (
     CreatePropertyAPIView,
     UpdatePropertyAPIView,
