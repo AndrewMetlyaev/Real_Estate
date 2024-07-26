@@ -44,12 +44,13 @@ class UpdatePropertyAPIView(UpdateAPIView):
     serializer_class = PropertyUpdateSerializer
     permission_classes = [AllowAny]
 
-    def update(self, request, *args, **kwargs):
+    def put(self, request, *args, **kwargs):
         property = get_object_or_404(Property, pk=kwargs['pk'])
-        property.update()
-
+        serializer = PropertyUpdateSerializer(instance=property, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
         return Response(
-            data={'message': "Property updated"},
+            data=serializer.data,
             status=status.HTTP_200_OK
         )
 

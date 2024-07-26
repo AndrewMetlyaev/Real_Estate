@@ -19,10 +19,11 @@ class PropertyUpdateSerializer(serializers.ModelSerializer):
         fields = '__all__'
         read_only_fields = ['owner']
 
-    def update(self, pk, validated_data):
-        property = get_object_or_404(Property, pk=pk)
-        property = Property.objects.update(**validated_data)
-        return property
+    def update(self, instance, validated_data):
+        for attr, value in validated_data.items():
+            setattr(instance, attr, value)
+        instance.save()
+        return instance
 
 
 class PropertyDeleteSerializer(serializers.ModelSerializer):
